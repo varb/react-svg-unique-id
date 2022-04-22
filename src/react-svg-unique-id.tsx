@@ -9,7 +9,11 @@ export const resetSVGGlobalID = () => {
   SVG_GLOBAL_ID = 0
 }
 
-export class SVGUniqueID extends React.Component {
+type Props = {
+  children?: React.ReactNode
+}
+
+export class SVGUniqueID extends React.Component<Props> {
   private svgId: number = SVG_GLOBAL_ID++
 
   private lastLocalId: number = 0
@@ -66,7 +70,13 @@ export class SVGUniqueID extends React.Component {
 
   render() {
     return reactRecursiveChildrenMap(this.props.children, child => {
-      if (!child || typeof child === 'string' || typeof child === 'number' || !('props' in child)) {
+      if (
+        !child
+        || typeof child === 'string'
+        || typeof child === 'number'
+        || typeof child === 'boolean'
+        || !('props' in child)
+      ) {
         return child
       }
 
